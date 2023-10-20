@@ -2,17 +2,23 @@ package praktikum.user;
 
 import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
+import praktikum.model.User;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static praktikum.Constants.*;
 
 public class UserChecker {
 
-    @Step("Проверка ответа на запрос создания пользователя")
-    public void creationSuccess(ValidatableResponse response) {
+    @Step("Проверка ответа на запрос создания/логина пользователя")
+    public void createOrLoginSuccess(ValidatableResponse response, User user) {
         response.assertThat()
                 .statusCode(STATUS_CODE_200)
-                .body("success", is(true));
+                .body("success", is(true))
+                .and()
+                .body("user.email", equalTo( user.getEmail()))
+                .and()
+                .body("user.name", equalTo(user.getName()));
     }
 
     @Step("Проверка ответа на запрос удаления пользователя")
@@ -21,7 +27,7 @@ public class UserChecker {
                 .statusCode(STATUS_CODE_202)
                 .body("success", is(true))
                 .and()
-                .body("message", is( "User successfully removed"));
+                .body("message", is( MSG_USER_REMOVE_SUCCESS));
     }
 
     @Step("Проверка ответа на запрос повторного создания пользователя")
@@ -30,7 +36,7 @@ public class UserChecker {
                 .statusCode(STATUS_CODE_403)
                 .body("success", is(false))
                 .and()
-                .body("message", is( "User already exists"));
+                .body("message", is( MSG_USER_ALREADY_EXISTS));
     }
 
 
@@ -40,10 +46,16 @@ public class UserChecker {
                 .statusCode(STATUS_CODE_403)
                 .body("success", is(false))
                 .and()
-                .body("message", is( "Email, password and name are required fields"));
+                .body("message", is( MSG_USER_DATA_REQUIRED));
     }
-//    {
-//        "success": false,
-//            "message": "Email, password and name are required fields"
-//    }
+
+    @Step("Проверка ответа на запрос авторизации с невалидными данными")
+    public void loginUserFail(ValidatableResponse response) {
+        response.assertThat()
+                .statusCode(STATUS_CODE_401)
+                .body("success", is(false))
+                .and()
+                .body("message", is(MSG_USER_AUTH_DATA_INCORRECT));
+    }
+
 }

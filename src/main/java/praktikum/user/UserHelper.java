@@ -15,7 +15,7 @@ public class UserHelper extends BaseRequest {
     @Step("Отправка запроса на создание пользователя")
     public ValidatableResponse create(User user) {
         return sendBaseRequest()
-                .body(user.getUserDataWithoutLogin())
+                .body(user.getUserDataForCreate())
                 .when()
                 .post(CREATE_USER_METHOD_PATH)
                 .then().log().all()
@@ -24,8 +24,6 @@ public class UserHelper extends BaseRequest {
 
     @Step("Получение токенов из запроса")
     public User extractTokenFromResponse(User user, ValidatableResponse response) {
-        //TODO: проверить обрезку токена
-//        user.setAccessToken((response.extract().path("accessToken")).toString().substring(7));
         user.setAccessToken((response.extract().path("accessToken")));
         user.setRefreshToken(response.extract().path("refreshToken"));
         return user;
@@ -36,9 +34,9 @@ public class UserHelper extends BaseRequest {
      }
 
     @Step("Отправка запроса на логин")
-    public ValidatableResponse login(Credentials creds) {
+    public ValidatableResponse login(User user) {
         return sendBaseRequest()
-                .body(creds)
+                .body(user.getUserDataForLogin())
                 .when()
                 .post(LOGIN_METHOD_PATH)
                 .then().log().all()

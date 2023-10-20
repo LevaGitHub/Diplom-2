@@ -4,7 +4,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Test;
 import praktikum.model.User;
 import praktikum.user.UserChecker;
@@ -36,7 +35,7 @@ public class UserCreateTest {
     @Description("Проверка создания пользователя с корректными данными")
     public void createUserSuccess() {
         ValidatableResponse createResponse = userHelper.create(userData);
-        courierChecker.creationSuccess(createResponse);
+        courierChecker.createOrLoginSuccess(createResponse, userData);
         userData = userHelper.extractTokenFromResponse(userData, createResponse);
     }
 

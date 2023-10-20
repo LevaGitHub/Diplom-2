@@ -60,16 +60,23 @@ public class User {
         this.name = name;
     }
 
-    public String getUserDataWithoutLogin() {
+    public String getUserDataForCreate() {
+        Map<String, String> data = getEmailPasswordAsJson();
+        data.put("name", this.name);
+        return new JSONObject(data).toString();
+    }
+
+    public String getUserDataForLogin() {
+        Map<String, String> data = getEmailPasswordAsJson();
+        return new JSONObject(data).toString();
+    }
+
+    private Map<String, String> getEmailPasswordAsJson(){
         Map<String, String> data = new HashMap<>();
         data.put("email", this.email);
         data.put("password", this.password);
-        data.put("name", this.name);
-        return new JSONObject(data).toString();
-//        JSONObject jsonObject = new JSONObject(data);
-//        return jsonObject.toString();
+        return data;
     }
-
 
 
 }
