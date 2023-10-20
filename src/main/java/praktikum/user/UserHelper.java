@@ -15,7 +15,7 @@ public class UserHelper extends BaseRequest {
     @Step("Отправка запроса на создание пользователя")
     public ValidatableResponse create(User user) {
         return sendBaseRequest()
-                .body(user)
+                .body(user.getUserDataWithoutLogin())
                 .when()
                 .post(CREATE_USER_METHOD_PATH)
                 .then().log().all()

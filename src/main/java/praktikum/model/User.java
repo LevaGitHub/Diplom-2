@@ -1,5 +1,10 @@
 package praktikum.model;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class User {
 
     private String email;
@@ -54,6 +59,17 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getUserDataWithoutLogin() {
+        Map<String, String> data = new HashMap<>();
+        data.put("email", this.email);
+        data.put("password", this.password);
+        data.put("name", this.name);
+        return new JSONObject(data).toString();
+//        JSONObject jsonObject = new JSONObject(data);
+//        return jsonObject.toString();
+    }
+
 
 
 }
