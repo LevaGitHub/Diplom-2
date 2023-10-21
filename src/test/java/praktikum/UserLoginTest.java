@@ -4,7 +4,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.Test;
-import praktikum.model.Credentials;
 import praktikum.model.User;
 import praktikum.user.UserChecker;
 import praktikum.user.UserGenerator;
@@ -25,7 +24,7 @@ public class UserLoginTest {
     public void loginUserSuccess() {
         userHelper.create(userData);
         ValidatableResponse loginResponse = userHelper.login(userData);
-        courierChecker.createOrLoginSuccess(loginResponse, userData);
+        courierChecker.userDataSuccess(loginResponse, userData);
         userData = userHelper.extractTokenFromResponse(userData, loginResponse);
         ValidatableResponse deleteResponse = userHelper.delete(userData.getAccessToken());
         courierChecker.deleteSuccess(deleteResponse);

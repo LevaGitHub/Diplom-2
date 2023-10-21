@@ -60,7 +60,7 @@ public class User {
         this.name = name;
     }
 
-    public String getUserDataForCreate() {
+    public String getUserDataForCreateUpdate() {
         Map<String, String> data = getEmailPasswordAsJson();
         data.put("name", this.name);
         return new JSONObject(data).toString();
@@ -77,6 +77,5 @@ public class User {
         data.put("password", this.password);
         return data;
     }
-
 
 }

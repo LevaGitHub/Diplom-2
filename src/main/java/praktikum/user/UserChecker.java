@@ -10,8 +10,8 @@ import static praktikum.Constants.*;
 
 public class UserChecker {
 
-    @Step("Проверка ответа на запрос создания/логина пользователя")
-    public void createOrLoginSuccess(ValidatableResponse response, User user) {
+    @Step("Проверка данных пользователя в успешно выполненном запросе")
+    public void userDataSuccess(ValidatableResponse response, User user) {
         response.assertThat()
                 .statusCode(STATUS_CODE_200)
                 .body("success", is(true))
@@ -57,5 +57,15 @@ public class UserChecker {
                 .and()
                 .body("message", is(MSG_USER_AUTH_DATA_INCORRECT));
     }
+
+    @Step("Проверка ответа на запрос авторизации с невалидными данными")
+    public void updateUserFail(ValidatableResponse response) {
+        response.assertThat()
+                .statusCode(STATUS_CODE_401)
+                .body("success", is(false))
+                .and()
+                .body("message", is(MSG_USER_UNAUTHORIZED));
+    }
+
 
 }

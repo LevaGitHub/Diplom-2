@@ -16,4 +16,6 @@ public class Constants {
     public static final String MSG_USER_ALREADY_EXISTS = "User already exists";
     public static final String MSG_USER_DATA_REQUIRED = "Email, password and name are required fields";
     public static final String MSG_USER_AUTH_DATA_INCORRECT = "email or password are incorrect";
+    public static final String MSG_USER_UNAUTHORIZED = "You should be authorised";
+
 }

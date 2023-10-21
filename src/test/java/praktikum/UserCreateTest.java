@@ -35,7 +35,7 @@ public class UserCreateTest {
     @Description("Проверка создания пользователя с корректными данными")
     public void createUserSuccess() {
         ValidatableResponse createResponse = userHelper.create(userData);
-        courierChecker.createOrLoginSuccess(createResponse, userData);
+        courierChecker.userDataSuccess(createResponse, userData);
         userData = userHelper.extractTokenFromResponse(userData, createResponse);
     }
 
