@@ -4,7 +4,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Test;
 import praktikum.model.User;
 import praktikum.user.UserChecker;
@@ -17,7 +16,7 @@ public class UserEditTest {
 
     private final UserHelper userHelper = new UserHelper();
     private final UserGenerator userGenerator = new UserGenerator();
-    private final UserChecker courierChecker = new UserChecker();
+    private final UserChecker userChecker = new UserChecker();
 
     private User userData = userGenerator.getRandom();
 
@@ -27,7 +26,7 @@ public class UserEditTest {
     public void deleteTestData() {
         if (!Objects.isNull(userData.getAccessToken())) {
             ValidatableResponse deleteResponse = userHelper.delete(userData.getAccessToken());
-            courierChecker.deleteSuccess(deleteResponse);
+            userChecker.deleteSuccess(deleteResponse);
         }
     }
 
@@ -42,9 +41,9 @@ public class UserEditTest {
         editUserData.setPassword(userData.getPassword());
         editUserData.setAccessToken(userData.getAccessToken());
         ValidatableResponse editResponse = userHelper.update(editUserData);
-        courierChecker.userDataSuccess(editResponse, editUserData);
+        userChecker.userDataSuccess(editResponse, editUserData);
         ValidatableResponse getResponse = userHelper.get(editUserData.getAccessToken());
-        courierChecker.userDataSuccess(getResponse, editUserData);
+        userChecker.userDataSuccess(getResponse, editUserData);
     }
 
     @Test
@@ -58,9 +57,9 @@ public class UserEditTest {
         editUserData.setEmail(userData.getEmail());
         editUserData.setAccessToken(userData.getAccessToken());
         ValidatableResponse editResponse = userHelper.update(editUserData);
-        courierChecker.userDataSuccess(editResponse, editUserData);
+        userChecker.userDataSuccess(editResponse, editUserData);
         ValidatableResponse loginResponse = userHelper.login(editUserData);
-        courierChecker.userDataSuccess(loginResponse, editUserData);
+        userChecker.userDataSuccess(loginResponse, editUserData);
         userData = userHelper.extractTokenFromResponse(userData, loginResponse);
     }
 
@@ -70,7 +69,7 @@ public class UserEditTest {
     public void updateUserDataFail() {
         ValidatableResponse createResponse = userHelper.create(userData);
         ValidatableResponse editResponse = userHelper.update(userData);
-        courierChecker.updateUserFail(editResponse);
+        userChecker.updateUserFail(editResponse);
         userData = userHelper.extractTokenFromResponse(userData, createResponse);
     }
 

@@ -16,7 +16,7 @@ public class UserCreateTest {
 
     private final UserHelper userHelper = new UserHelper();
     private final UserGenerator userGenerator = new UserGenerator();
-    private final UserChecker courierChecker = new UserChecker();
+    private final UserChecker userChecker = new UserChecker();
 
     private User userData = userGenerator.getRandom();
 
@@ -26,7 +26,7 @@ public class UserCreateTest {
     public void deleteTestData() {
         if (!Objects.isNull(userData.getAccessToken())) {
             ValidatableResponse deleteResponse = userHelper.delete(userData.getAccessToken());
-            courierChecker.deleteSuccess(deleteResponse);
+            userChecker.deleteSuccess(deleteResponse);
         }
     }
 
@@ -35,7 +35,7 @@ public class UserCreateTest {
     @Description("Проверка создания пользователя с корректными данными")
     public void createUserSuccess() {
         ValidatableResponse createResponse = userHelper.create(userData);
-        courierChecker.userDataSuccess(createResponse, userData);
+        userChecker.userDataSuccess(createResponse, userData);
         userData = userHelper.extractTokenFromResponse(userData, createResponse);
     }
 
@@ -46,7 +46,7 @@ public class UserCreateTest {
         ValidatableResponse createResponse = userHelper.create(userData);
         userData = userHelper.extractTokenFromResponse(userData, createResponse);
         createResponse = userHelper.create(userData);
-        courierChecker.createExistsUserFail(createResponse);
+        userChecker.createExistsUserFail(createResponse);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class UserCreateTest {
     public void createUserWithoutRequiredFieldsFail() {
         userData.setEmail("");
         ValidatableResponse createResponse = userHelper.create(userData);
-        courierChecker.createUserWithoutRequiredFieldsFail(createResponse);
+        userChecker.createUserWithoutRequiredFieldsFail(createResponse);
     }
 
 }

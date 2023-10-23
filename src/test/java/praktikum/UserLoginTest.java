@@ -13,7 +13,7 @@ public class UserLoginTest {
 
     private final UserHelper userHelper = new UserHelper();
     private final UserGenerator userGenerator = new UserGenerator();
-    private final UserChecker courierChecker = new UserChecker();
+    private final UserChecker userChecker = new UserChecker();
 
     private User userData = userGenerator.getRandom();
 
@@ -24,10 +24,10 @@ public class UserLoginTest {
     public void loginUserSuccess() {
         userHelper.create(userData);
         ValidatableResponse loginResponse = userHelper.login(userData);
-        courierChecker.userDataSuccess(loginResponse, userData);
+        userChecker.userDataSuccess(loginResponse, userData);
         userData = userHelper.extractTokenFromResponse(userData, loginResponse);
         ValidatableResponse deleteResponse = userHelper.delete(userData.getAccessToken());
-        courierChecker.deleteSuccess(deleteResponse);
+        userChecker.deleteSuccess(deleteResponse);
     }
 
     @Test
@@ -35,7 +35,7 @@ public class UserLoginTest {
     @Description("Проверка логина пользователя, не зарегистрированного в системе")
     public void loginNotRegistredUserFail() {
         ValidatableResponse loginResponse = userHelper.login(userData);
-        courierChecker.loginUserFail(loginResponse);
+        userChecker.loginUserFail(loginResponse);
     }
 
 }
