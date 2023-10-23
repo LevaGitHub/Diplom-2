@@ -60,7 +60,7 @@ public class UserHelper extends BaseRequest {
 
     @Step("Отправка запроса на обновление пользователя")
     public ValidatableResponse update(User user) {
-        RequestSpecification request = sendBaseRequest();
+//        RequestSpecification request = sendBaseRequest();
         if (!Objects.isNull(user.getAccessToken())) {
             return sendBaseRequest()
                     .header("Authorization",user.getAccessToken())

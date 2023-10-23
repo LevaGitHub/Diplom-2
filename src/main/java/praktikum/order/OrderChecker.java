@@ -33,4 +33,21 @@ public class OrderChecker {
         response.assertThat()
                 .statusCode(STATUS_CODE_500);
     }
+
+    @Step("Проверка данных заказа")
+    public void orderDataSuccess(ValidatableResponse response) {
+        response.assertThat()
+                .statusCode(STATUS_CODE_200)
+                .body("success", is(true));
+    }
+
+    @Step("Проверка запроса получения данных заказа неавторизованным пользователем")
+    public void orderDataUnauthorizedFail(ValidatableResponse response) {
+        response.assertThat()
+                .statusCode(STATUS_CODE_401)
+                .body("success", is(false))
+                .and()
+                .body("message", equalTo(MSG_USER_UNAUTHORIZED)); {
+        }
+    }
 }

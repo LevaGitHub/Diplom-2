@@ -54,7 +54,7 @@ public class OrderCreateTest {
     public void createOrderAuthorizedUserSuccess() {
         userData = userHelper.extractTokenFromResponse(userData, createUserResponse);
         Order orderData = new Order(List.of(BUN_ID, MAIN_ID, SAUCE_ID));
-        ValidatableResponse creareOrderResponse =  orderHelper.create(orderData);
+        ValidatableResponse creareOrderResponse =  orderHelper.create(orderData, userData);
         orderChecker.userDataSuccess(creareOrderResponse);
     }
 
@@ -63,7 +63,7 @@ public class OrderCreateTest {
     @Description("Проверка создания заказа неавторизованным пользователем")
     public void createOrderNoAuthorizedUserSuccess() {
         Order orderData = new Order(List.of(BUN_ID, MAIN_ID, SAUCE_ID));
-        ValidatableResponse creareOrderResponse =  orderHelper.create(orderData);
+        ValidatableResponse creareOrderResponse =  orderHelper.create(orderData, userData);
         orderChecker.userDataSuccess(creareOrderResponse);
         userData = userHelper.extractTokenFromResponse(userData, createUserResponse);
     }
@@ -74,7 +74,7 @@ public class OrderCreateTest {
     public void createOrderWithoutIngredientsFail() {
         userData = userHelper.extractTokenFromResponse(userData, createUserResponse);
         Order orderData = new Order(List.of());
-        ValidatableResponse creareOrderResponse =  orderHelper.create(orderData);
+        ValidatableResponse creareOrderResponse =  orderHelper.create(orderData, userData);
         orderChecker.userDataWithoutIngredientsFail(creareOrderResponse);
 
     }
@@ -85,7 +85,7 @@ public class OrderCreateTest {
     public void createOrderWrongIngredientFail() {
         userData = userHelper.extractTokenFromResponse(userData, createUserResponse);
         Order orderData = new Order(List.of(WRONG_INGREDIENT_ID));
-        ValidatableResponse creareOrderResponse =  orderHelper.create(orderData);
+        ValidatableResponse creareOrderResponse =  orderHelper.create(orderData, userData);
         orderChecker.userDataWrongIngredientsFail(creareOrderResponse);
     }
 
