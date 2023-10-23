@@ -28,6 +28,7 @@ public class OrderHelper extends BaseRequest {
         }
     }
 
+
     private ValidatableResponse createWithOutAuth(Order order) {
         return sendBaseRequest()
                 .body(order.getIngredientsListAsJson())
@@ -36,6 +37,7 @@ public class OrderHelper extends BaseRequest {
                 .then().log().all()
                 ;
     }
+
 
     @Step("Получение номера заказа")
     public Order extractOrderNumberFromResponse(Order order, ValidatableResponse response) {
@@ -57,6 +59,7 @@ public class OrderHelper extends BaseRequest {
             return getWithOutAuth();
         }
     }
+
 
     private ValidatableResponse getWithOutAuth(){
         return sendBaseRequest()

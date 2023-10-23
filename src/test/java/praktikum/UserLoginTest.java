@@ -30,6 +30,7 @@ public class UserLoginTest {
         userChecker.deleteSuccess(deleteResponse);
     }
 
+
     @Test
     @DisplayName("Login not registered User")
     @Description("Проверка логина пользователя, не зарегистрированного в системе")

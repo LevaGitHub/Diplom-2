@@ -4,12 +4,10 @@ import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import praktikum.BaseRequest;
-import praktikum.model.Credentials;
 import praktikum.model.User;
 
 import java.util.Objects;
 
-import static io.restassured.RestAssured.given;
 
 public class UserHelper extends BaseRequest {
     protected final String CREATE_USER_METHOD_PATH = "auth/register";
@@ -27,6 +25,7 @@ public class UserHelper extends BaseRequest {
                 ;
     }
 
+
     @Step("Получение токенов из запроса")
     public User extractTokenFromResponse(User user, ValidatableResponse response) {
         user.setAccessToken((response.extract().path("accessToken")));
@@ -34,9 +33,6 @@ public class UserHelper extends BaseRequest {
         return user;
     }
 
-     public Credentials extractCredentials(User user){
-        return Credentials.from(user);
-     }
 
     @Step("Отправка запроса на логин")
     public ValidatableResponse login(User user) {
@@ -48,6 +44,7 @@ public class UserHelper extends BaseRequest {
                 ;
     }
 
+
     @Step("Отправка запроса на удаление пользователя")
     public ValidatableResponse  delete(String token) {
         return sendBaseRequest()
@@ -58,9 +55,9 @@ public class UserHelper extends BaseRequest {
                 ;
     }
 
+
     @Step("Отправка запроса на обновление пользователя")
     public ValidatableResponse update(User user) {
-//        RequestSpecification request = sendBaseRequest();
         if (!Objects.isNull(user.getAccessToken())) {
             return sendBaseRequest()
                     .header("Authorization",user.getAccessToken())

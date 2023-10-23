@@ -46,6 +46,7 @@ public class UserEditTest {
         userChecker.userDataSuccess(getResponse, editUserData);
     }
 
+
     @Test
     @DisplayName("Edit User Password")
     @Description("Проверка редактирования данных пользователя (Пароль)")
@@ -62,6 +63,7 @@ public class UserEditTest {
         userChecker.userDataSuccess(loginResponse, editUserData);
         userData = userHelper.extractTokenFromResponse(userData, loginResponse);
     }
+
 
     @Test
     @DisplayName("Edit User Data by unauthorized User")

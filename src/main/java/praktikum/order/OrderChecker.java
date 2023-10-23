@@ -19,6 +19,7 @@ public class OrderChecker {
                 .body("success", is(true));
     }
 
+
     @Step("Проверка данных заказа без ингредиентов")
     public void userDataWithoutIngredientsFail(ValidatableResponse response) {
         response.assertThat()
@@ -28,11 +29,13 @@ public class OrderChecker {
                 .body("message", equalTo(MSG_INGREDIENT_MUST_BE_PROVIDED));
     }
 
+
     @Step("Проверка данных заказа c неверным хешем ингредиентов")
     public void userDataWrongIngredientsFail(ValidatableResponse response) {
         response.assertThat()
                 .statusCode(STATUS_CODE_500);
     }
+
 
     @Step("Проверка данных заказа")
     public void orderDataSuccess(ValidatableResponse response) {
@@ -40,6 +43,7 @@ public class OrderChecker {
                 .statusCode(STATUS_CODE_200)
                 .body("success", is(true));
     }
+
 
     @Step("Проверка запроса получения данных заказа неавторизованным пользователем")
     public void orderDataUnauthorizedFail(ValidatableResponse response) {
@@ -50,4 +54,5 @@ public class OrderChecker {
                 .body("message", equalTo(MSG_USER_UNAUTHORIZED)); {
         }
     }
+
 }

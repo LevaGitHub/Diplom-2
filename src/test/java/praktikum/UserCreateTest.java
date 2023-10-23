@@ -30,6 +30,7 @@ public class UserCreateTest {
         }
     }
 
+
     @Test
     @DisplayName("Create User")
     @Description("Проверка создания пользователя с корректными данными")
@@ -38,6 +39,7 @@ public class UserCreateTest {
         userChecker.userDataSuccess(createResponse, userData);
         userData = userHelper.extractTokenFromResponse(userData, createResponse);
     }
+
 
     @Test
     @DisplayName("Create exists User")
@@ -49,9 +51,10 @@ public class UserCreateTest {
         userChecker.createExistsUserFail(createResponse);
     }
 
+
     @Test
-    @DisplayName("Create exists User")
-    @Description("Проверка невозможности повторного создания существующего пользователя")
+    @DisplayName("Create User without required fields")
+    @Description("Проверка невозможности создания пользователя без обязательного атрибута")
     public void createUserWithoutRequiredFieldsFail() {
         userData.setEmail("");
         ValidatableResponse createResponse = userHelper.create(userData);
